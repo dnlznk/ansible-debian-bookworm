@@ -1,0 +1,73 @@
+- name: check if dotfiles are already cloned
+  stat:
+    path: "{{ dotfiles_dir }}"
+  register: dotfiles
+  tags:
+    - install
+    - dotfiles
+
+- name: clone repository
+  when: not dotfiles.stat.exists
+  git:
+    repo: "https://oauth2:{{ gh_pat }}@github.com/dnlznk/{{ dotfiles_repo }}"
+    dest: "{{ dotfiles_dir }}"
+  tags:
+    - install
+    - dotfiles
+
+- name: change .dotfiles origin
+  when: not dotfiles.stat.exists
+  shell:
+    cmd: git remote remove origin && git remote add origin "git@github.com:dnlznk/{{ dotfiles_repo }}"
+    chdir: "{{ dotfiles_dir }}"
+  tags:
+    - install
+    - dotfiles
+
+- name: change ansible-debian-bookworm origin
+  when: not dotfiles.stat.exists
+  shell:
+    cmd: git remote remove origin && git remote add origin git@github.com:dnlznk/ansible-debian-bookworm
+    chdir: "{{ home }}/ansible-debian-bookworm"
+  tags:
+    - install
+    - dotfiles
+
+- name: remove .zshenv
+  when: not dotfiles.stat.exists
+  file:
+    path: "{{ home }}/.zshenv"
+    state: absent
+  tags:
+    - install
+    - dotfiles
+
+- name: run dotfiles script
+  when: not dotfiles.stat.exists
+  shell:
+    cmd: "./linux"
+    chdir: "{{ dotfiles_dir }}"
+  tags:
+    - install
+    - dotfiles
+
+- name: create background dir
+  when: not dotfiles.stat.exists
+  become: true
+  shell: mkdir -p /usr/share/backgrounds
+  tags:
+    - install
+    - dotfiles
+
+- name: link wallpaper
+  when: not dotfiles.stat.exists
+  become: true
+  copy:
+    src: "{{ dotfiles_dir }}/wallpaper/wallpaper.jpg"
+    dest: /usr/share/backgrounds/wallpaper.jpg
+  tags:
+    - install
+    - dotfiles
+
+- name: set secrets
+  import_tasks: tasks/secrets.yml

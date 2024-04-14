@@ -1,0 +1,31 @@
+- hosts: localhost
+  vars:
+  vars_files:
+    - vars/vars.yml
+    - vars/secrets.yml
+  pre_tasks:
+    - name: Update cache
+      become: true
+      apt:
+        update_cache: true
+  tasks:
+    - name: install system packages
+      import_tasks: tasks/system.yml
+
+    - name: install neovim
+      import_tasks: tasks/neovim.yml
+
+    - name: install rust
+      import_tasks: tasks/rust.yml
+
+    - name: install go
+      import_tasks: tasks/go.yml
+
+    - name: install node
+      import_tasks: tasks/node.yml
+
+    - name: install dotfiles
+      import_tasks: tasks/dotfiles.yml
+
+    - name: build st terminal
+      import_tasks: tasks/st-terminal.yml

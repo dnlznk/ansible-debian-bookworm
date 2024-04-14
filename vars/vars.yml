@@ -1,0 +1,8 @@
+username: "{{ lookup('env', 'USER') }}"
+home: "{{ lookup('env', 'HOME') }}"
+dotfiles_dir: "{{ home }}/.dotfiles"
+neovim_dir: "{{ home }}/.neovim"
+nvm_dir: "{{ home }}/.nvm"
+st_dir: "{{ home }}/.st-terminal"
+font_dir: "{{ home }}/.local/share/fonts"
+go_dir: "{{ home }}/.local/share"

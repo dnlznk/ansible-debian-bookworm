@@ -1,0 +1,250 @@
+- name: install already run?
+  shell: command -v zsh
+  register: system_installed
+  ignore_errors: true
+  tags:
+    - install
+    - browser
+    - spotify
+    - system
+
+- name: install system packages
+  when: system_installed is failed
+  become: true
+  ansible.builtin.apt:
+    pkg:
+      - zsh
+      - tmux
+      - i3
+      - compton
+      - xorg
+      - xinit
+      - lightdm
+      - feh
+      - stow
+      - tldr
+      - fzf
+      - libx11-dev
+      - gcc
+      - build-essential
+      - libxft-dev
+      - fd-find
+      - ripgrep
+      - ninja-build
+      - gettext
+      - cmake
+      - unzip
+      - curl
+      - gpg
+      - mokutil
+      - qemu-system
+      - libvirt-daemon-system
+      - virt-manager
+      - golang
+      - pass
+  tags:
+    - install
+    - system
+
+- name: add docker gpg
+  when: system_installed is failed
+  become: true
+  shell: install -m 0755 -d /etc/apt/keyrings && curl -fsSL https://download.docker.com/linux/debian/gpg -o /etc/apt/keyrings/docker.asc && chmod a+r /etc/apt/keyrings/docker.asc
+  tags:
+    - install
+    - docker
+    - system
+
+- name: add docker repository
+  when: system_installed is failed
+  become: true
+  shell: |
+    echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/debian \
+    $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
+    tee /etc/apt/sources.list.d/docker.list > /dev/null
+  tags:
+    - install
+    - docker
+    - system
+
+- name: install docker
+  when: system_installed is failed
+  become: true
+  apt:
+    pkg:
+      - docker-ce
+    update_cache: true
+  tags:
+    - install
+    - docker
+    - system
+
+- name: add user to group
+  when: system_installed is failed
+  become: true
+  shell: usermod -aG docker "{{ username }}"
+  tags:
+    - install
+    - docker
+    - system
+
+- name: get vscode keyring
+  # when: system_installed is failed
+  become: true
+  shell: wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg && install -D -m 644 packages.microsoft.gpg /etc/apt/keyrings/packages.microsoft.gpg && rm -f packages.microsoft.gpg
+  tags:
+    - install
+    - vscode
+    - system
+
+- name: add vscode repo
+  # when: system_installed is failed
+  become: true
+  shell: |
+    echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main" |
+    tee /etc/apt/sources.list.d/vscode.list > /dev/null
+  tags:
+    - install
+    - vscode
+    - system
+
+- name: install vscode
+  # when: system_installed is failed
+  become: true
+  ansible.builtin.apt:
+    pkg:
+      - code
+    update_cache: true
+  tags:
+    - install
+    - vscode
+    - system
+
+- name: set brave keyring
+  when: system_installed is failed
+  become: true
+  shell: curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg
+  tags:
+    - install
+    - browser
+    - system
+
+- name: set brave source
+  when: system_installed is failed
+  become: true
+  shell: echo "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg] https://brave-browser-apt-release.s3.brave.com/ stable main" | tee /etc/apt/sources.list.d/brave-browser-release.list
+  tags:
+    - install
+    - browser
+    - system
+
+- name: install browser
+  when: system_installed is failed
+  become: true
+  ansible.builtin.apt:
+    pkg:
+      - brave-browser
+      - firefox-esr
+      - chromium
+    update_cache: true
+  tags:
+    - install
+    - browser
+    - system
+
+- name: set spotify keyring
+  when: system_installed is failed
+  become: true
+  shell: curl -sS https://download.spotify.com/debian/pubkey_6224F9941A8AA6D1.gpg | gpg --dearmor --yes -o /etc/apt/trusted.gpg.d/spotify.gpg
+  tags:
+    - install
+    - spotify
+    - system
+
+- name: add spotify source
+  when: system_installed is failed
+  become: true
+  shell: echo "deb http://repository.spotify.com stable non-free" | tee /etc/apt/sources.list.d/spotify.list
+  tags:
+    - install
+    - spotify
+    - system
+
+- name: install spotify
+  when: system_installed is failed
+  become: true
+  ansible.builtin.apt:
+    pkg:
+      - spotify-client
+    update_cache: true
+  tags:
+    - install
+    - spotify
+    - system
+
+- name: set display manager
+  when: system_installed is failed
+  become: true
+  command: dpkg-reconfigure lightdm
+  tags:
+    - install
+    - system
+
+- name: change shell
+  when: system_installed is failed
+  become: true
+  shell: "chsh -s $(which zsh) {{ username }}"
+  tags:
+    - install
+    - system
+
+- name: download font
+  when: system_installed is failed
+  become: true
+  get_url:
+    url: https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/Hasklig.tar.xz
+    dest: /tmp/Hasklug.tar.gz
+    force: "yes"
+  tags:
+    - install
+    - fonts
+    - system
+
+- name: create font directory
+  when: system_installed is failed
+  shell: "mkdir -p {{ font_dir }}"
+  tags:
+    - install
+    - fonts
+    - system
+
+- name: extract fonts
+  when: system_installed is failed
+  become: true
+  shell: "tar -xf /tmp/Hasklug.tar.gz -C {{ font_dir }} HasklugNerdFont-Regular.otf HasklugNerdFont-Medium.otf HasklugNerdFont-BoldItalic.otf HasklugNerdFont-Bold.otf HasklugNerdFont-Italic.otf HasklugNerdFontMono-Regular.otf HasklugNerdFontMono-Medium.otf HasklugNerdFontMono-BoldItalic.otf HasklugNerdFontMono-Bold.otf HasklugNerdFontMono-Italic.otf"
+  tags:
+    - install
+    - fonts
+    - system
+
+- name: change ownership
+  when: system_installed is failed
+  become: true
+  file:
+    path: "{{ home }}/.local"
+    state: directory
+    recurse: yes
+    owner: "{{ username }}"
+    group: "{{ username }}"
+  tags:
+    - install
+    - fonts
+    - system
+
+- name: update font cache
+  when: system_installed is failed
+  shell: fc-cache -f -v
+  tags:
+    - install
+    - fonts
+    - system

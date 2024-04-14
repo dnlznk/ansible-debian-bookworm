@@ -1,0 +1,27 @@
+- name: check st exists
+  shell: command -v st
+  register: st_installed
+  ignore_errors: true
+  tags:
+    - install
+    - st
+
+- name: clone st repo
+  when: st_installed is failed
+  git:
+    repo: git@github.com:dnlznk/st-terminal
+    key_file: "{{ priv_key }}"
+    dest: "{{ st_dir }}"
+  tags:
+    - install
+    - st
+
+- name: make st
+  when: st_installed is failed
+  become: true
+  shell:
+    cmd: make clean install
+    chdir: "{{ st_dir }}"
+  tags:
+    - install
+    - st

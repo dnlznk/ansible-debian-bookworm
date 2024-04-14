@@ -1,0 +1,42 @@
+- name: check nvm is installed
+  command: which nvm
+  ignore_errors: true
+  register: nvm_exists
+  tags:
+    - install
+    - node
+
+- name: create nvm dir
+  when: nvm_exists is failed
+  command: "mkdir -p {{ nvm_dir }}"
+  tags:
+    - install
+    - node
+
+- name: clone nvm repo
+  when: nvm_exists is failed
+  git:
+    repo: https://github.com/nvm-sh/nvm
+    dest: "{{ nvm_dir }}"
+    version: v0.39.7
+  tags:
+    - install
+    - node
+
+- name: install node lts
+  when: nvm_exists is failed
+  shell: "source {{ nvm_dir }}/nvm.sh && nvm install --lts"
+  args:
+    executable: /bin/bash
+  tags:
+    - install
+    - node
+
+- name: install node neovim plugins
+  when: nvm_exists is failed
+  shell: "source {{ nvm_dir }}/nvm.sh && npm i -g neovim tree-sitter-cli prettier @johnnymorganz/stylua-bin tsc"
+  args:
+    executable: /bin/bash
+  tags:
+    - install
+    - node

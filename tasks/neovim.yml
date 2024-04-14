@@ -1,0 +1,47 @@
+- name: check if neovim is installed
+  shell: command -v nvim
+  register: neovim_exists
+  ignore_errors: true
+  tags:
+    - install
+    - neovim
+
+- name: clone neovim repo
+  when: neovim_exists is failed
+  git:
+    repo: https://github.com/neovim/neovim
+    dest: "{{ neovim_dir }}"
+    version: v0.9.5
+  tags:
+    - install
+    - neovim
+
+- name: build neovim
+  when: neovim_exists is failed
+  become: true
+  shell:
+    cmd: make CMAKE_BUILD_TYPE=Release
+    chdir: "{{ neovim_dir }}"
+  tags:
+    - install
+    - neovim
+
+- name: install neovim
+  when: neovim_exists is failed
+  become: true
+  shell:
+    cmd: make install
+    chdir: "{{ neovim_dir }}"
+  tags:
+    - install
+    - neovim
+
+- name: install python neovim plugin
+  when: system_installed is failed
+  become: true
+  ansible.builtin.apt:
+    pkg:
+      - python3-neovim
+  tags:
+    - install
+    - neovim
