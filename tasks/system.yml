@@ -21,6 +21,8 @@
       - xinit
       - lightdm
       - feh
+      - alsa-utils
+      - pulseaudio
       - stow
       - tldr
       - fzf
