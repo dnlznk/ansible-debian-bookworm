@@ -18,9 +18,6 @@
     - name: install rust
       import_tasks: tasks/rust.yml
 
-    - name: install go
-      import_tasks: tasks/go.yml
-
     - name: install node
       import_tasks: tasks/node.yml
 
