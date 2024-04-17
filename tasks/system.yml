@@ -171,6 +171,15 @@
     - browser
     - system
 
+- name: set default browser
+  when: system_installed is failed
+  become: true
+  shell: update-alternatives --install /usr/bin/x-www-browser x-www-browser /usr/bin/brave-browser
+  tags:
+    - install
+    - browser
+    - system
+
 - name: set spotify keyring
   when: system_installed is failed
   become: true
