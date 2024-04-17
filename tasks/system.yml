@@ -44,6 +44,15 @@
       - virt-manager
       - golang
       - pass
+      - ufw
+  tags:
+    - install
+    - system
+
+- name: firewall config
+  when: system_installed is failed
+  become: true
+  shell: ufw default deny incoming && ufw default allow outgoing && ufw enable
   tags:
     - install
     - system
