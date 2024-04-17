@@ -49,6 +49,14 @@
     - install
     - system
 
+- name: add user to libvirt group
+  when: system_installed is failed
+  become: true
+  shell: adduser "{{ username }}" libvirt
+  tags:
+    - install
+    - system
+
 - name: firewall config
   when: system_installed is failed
   become: true
