@@ -11,18 +11,30 @@
   tasks:
     - name: install system packages
       include_tasks: tasks/system.yml
+      tags:
+        - always
 
     - name: install neovim
       include_tasks: tasks/neovim.yml
+      tags:
+        - always
 
     - name: install rust
       include_tasks: tasks/rust.yml
+      tags:
+        - always
 
     - name: install node
       include_tasks: tasks/node.yml
+      tags:
+        - always
 
     - name: install dotfiles
       include_tasks: tasks/dotfiles.yml
+      tags:
+        - always
 
     - name: build st terminal
       include_tasks: tasks/st-terminal.yml
+      tags:
+        - always
