@@ -174,7 +174,7 @@
 - name: set default browser
   when: system_installed is failed
   become: true
-  shell: update-alternatives --install /usr/bin/x-www-browser x-www-browser /usr/bin/brave-browser
+  shell: update-alternatives --install /usr/bin/x-www-browser x-www-browser /usr/bin/brave-browser 300
   tags:
     - install
     - browser
