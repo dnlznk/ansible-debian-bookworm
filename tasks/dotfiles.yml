@@ -69,5 +69,13 @@
     - install
     - dotfiles
 
+- name: set lightdm backgrounds
+  when: not dotfiles.stat.exists
+  become: true
+  shell: sed -i 's@#background=@background=/usr/share/backgrounds/wallpaper.jpg@g' /etc/lightdm/lightdm-gtk-greeter.conf && sed -i 's@#user-background=@user-background=/usr/share/backgrounds/wallpaper.jpg@g' /etc/lightdm/lightdm-gtk-greeter.conf
+  tags:
+    - install
+    - dotfiles
+
 - name: set secrets
   import_tasks: tasks/secrets.yml
