@@ -20,7 +20,6 @@
       - xorg
       - xinit
       - lightdm
-      - feh
       - alsa-utils
       - pulseaudio
       - stow
