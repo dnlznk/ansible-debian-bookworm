@@ -45,6 +45,7 @@
       - pass
       - ufw
       - dkms
+      - fswatch
   tags:
     - install
     - system
