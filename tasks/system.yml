@@ -48,6 +48,7 @@
       - fswatch
       - ntfs-3g
       - fuse3
+      - fwupd
   tags:
     - install
     - system
