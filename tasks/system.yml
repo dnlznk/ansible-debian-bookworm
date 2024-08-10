@@ -49,6 +49,7 @@
       - ntfs-3g
       - fuse3
       - fwupd
+      - polybar
   tags:
     - install
     - system
