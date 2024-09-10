@@ -1,6 +1,7 @@
 - name: check if docker is installed
   shell: command -v docker
   register: docker_installed
+  ignore_errors: true
   tags:
     - install
     - docker

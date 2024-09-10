@@ -1,6 +1,7 @@
 - name: check if browser is installed
   shell: command -v brave-browser
   register: browser_installed
+  ignore_errors: true
   tags:
     - install
     - system

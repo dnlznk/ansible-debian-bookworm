@@ -1,6 +1,7 @@
 - name: check if font is installed
   shell: fc-list | grep Hasklug
   register: font_installed
+  ignore_errors: true
   tags:
     - install
     - system

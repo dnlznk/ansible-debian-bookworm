@@ -1,6 +1,7 @@
 - name: check if spotify is install
   shell: command -v spotify
   register: spotify_installed
+  ignore_errors: true
   tags:
     - install
     - spotify
