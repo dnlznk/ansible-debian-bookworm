@@ -58,6 +58,7 @@
       - fuse3
       - fwupd
       - polybar
+      - luarocks
   tags:
     - install
     - system
