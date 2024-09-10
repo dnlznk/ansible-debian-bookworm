@@ -14,6 +14,16 @@
       tags:
         - always
 
+    - name: install browser
+      include_task: tasks/browser.yml
+      tags:
+        - always
+
+    - name: install font
+      include_task: tasks/font.yml
+      tags:
+        - always
+
     - name: install docker
       include_tasks: tasks/docker.yml
       tags:

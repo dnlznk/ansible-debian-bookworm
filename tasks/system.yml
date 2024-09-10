@@ -91,15 +91,3 @@
   tags:
     - install
     - system
-
-- name: install browser
-  include_task: system/browser.yml
-  tags:
-    - install
-    - system
-
-- name: install font
-  include_task: system/font.yml
-  tags:
-    - install
-    - system
