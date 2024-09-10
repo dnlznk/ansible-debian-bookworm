@@ -6,7 +6,7 @@
     - install
     - system
 
-- name: download font
+- name: download fonts
   when: font_installed is failed
   become: true
   get_url:

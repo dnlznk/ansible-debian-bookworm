@@ -19,8 +19,8 @@
       tags:
         - always
 
-    - name: install font
-      include_tasks: tasks/font.yml
+    - name: install fonts
+      include_tasks: tasks/fonts.yml
       tags:
         - always
 
