@@ -15,12 +15,12 @@
         - always
 
     - name: install browser
-      include_task: tasks/browser.yml
+      include_tasks: tasks/browser.yml
       tags:
         - always
 
     - name: install font
-      include_task: tasks/font.yml
+      include_tasks: tasks/font.yml
       tags:
         - always
 
