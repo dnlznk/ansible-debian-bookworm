@@ -84,10 +84,10 @@
     - install
     - system
 
-# - name: change shell
-#   when: system_installed is failed
-#   become: true
-#   shell: "chsh -s $(which zsh) {{ username }}"
-#   tags:
-#     - install
-#     - system
+- name: change shell
+  when: system_installed is failed
+  become: true
+  shell: "chsh -s $(which zsh) {{ username }}"
+  tags:
+    - install
+    - system
