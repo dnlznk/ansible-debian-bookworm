@@ -19,16 +19,18 @@
 
 - name: make blesh
   when: not blesh.stat.exists
-  shell: make
-  chdir: "{{ blesh_dir }}"
+  shell:
+    cmd: make
+    chdir: "{{ blesh_dir }}"
   tags:
     - install
     - blesh
 
 - name: install blesh
   when: not blesh.stat.exists
-  shell: make install
-  chdir: "{{ blesh_dir }}"
+  shell: 
+    cmd: make install
+    chdir: "{{ blesh_dir }}"
   tags:
     - install
     - blesh
