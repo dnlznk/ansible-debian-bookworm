@@ -18,7 +18,7 @@
 
 - name: install fzf
   when: fzf_installed is failed
-  shell: "{{ fzf_dir }}/install.sh --all"
+  shell: "{{ fzf_dir }}/install --all"
   tags:
     - install
     - fzf
