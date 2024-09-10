@@ -36,6 +36,7 @@
       - valgrind
       - build-essential
       - libxft-dev
+      - gawk
       - fd-find
       - ripgrep
       - ninja-build
