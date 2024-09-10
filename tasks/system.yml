@@ -33,6 +33,7 @@
       - tldr
       - libx11-dev
       - gcc
+      - valgrind
       - build-essential
       - libxft-dev
       - fd-find
