@@ -14,6 +14,11 @@
       tags:
         - always
 
+    - name: install blesh
+      include_tasks: tasks/blesh.yml
+      tags:
+        - always
+
     - name: install browser
       include_tasks: tasks/browser.yml
       tags:
