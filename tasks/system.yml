@@ -84,47 +84,6 @@
     - install
     - system
 
-- name: set brave keyring
-  when: system_installed is failed
-  become: true
-  shell: curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg
-  tags:
-    - install
-    - browser
-    - system
-
-- name: set brave source
-  when: system_installed is failed
-  become: true
-  shell: echo "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg] https://brave-browser-apt-release.s3.brave.com/ stable main" | tee /etc/apt/sources.list.d/brave-browser-release.list
-  tags:
-    - install
-    - browser
-    - system
-
-- name: install browser
-  when: system_installed is failed
-  become: true
-  ansible.builtin.apt:
-    pkg:
-      - brave-browser
-      - firefox-esr
-      - chromium
-    update_cache: true
-  tags:
-    - install
-    - browser
-    - system
-
-- name: set default browser
-  when: system_installed is failed
-  become: true
-  shell: update-alternatives --install /usr/bin/x-www-browser x-www-browser /usr/bin/brave-browser 300
-  tags:
-    - install
-    - browser
-    - system
-
 - name: change shell
   when: system_installed is failed
   become: true
@@ -133,53 +92,14 @@
     - install
     - system
 
-- name: download font
-  when: system_installed is failed
-  become: true
-  get_url:
-    url: https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/Hasklig.tar.xz
-    dest: /tmp/Hasklug.tar.gz
-    force: "yes"
+- name: install browser
+  include_task: system/browser.yml
   tags:
     - install
-    - fonts
     - system
 
-- name: create font directory
-  when: system_installed is failed
-  shell: "mkdir -p {{ font_dir }}"
+- name: install font
+  include_task: system/font.yml
   tags:
     - install
-    - fonts
-    - system
-
-- name: extract fonts
-  when: system_installed is failed
-  become: true
-  shell: "tar -xf /tmp/Hasklug.tar.gz -C {{ font_dir }} HasklugNerdFont-Regular.otf HasklugNerdFont-Medium.otf HasklugNerdFont-BoldItalic.otf HasklugNerdFont-Bold.otf HasklugNerdFont-Italic.otf HasklugNerdFontMono-Regular.otf HasklugNerdFontMono-Medium.otf HasklugNerdFontMono-BoldItalic.otf HasklugNerdFontMono-Bold.otf HasklugNerdFontMono-Italic.otf"
-  tags:
-    - install
-    - fonts
-    - system
-
-- name: change ownership
-  when: system_installed is failed
-  become: true
-  file:
-    path: "{{ home }}/.local"
-    state: directory
-    recurse: yes
-    owner: "{{ username }}"
-    group: "{{ username }}"
-  tags:
-    - install
-    - fonts
-    - system
-
-- name: update font cache
-  when: system_installed is failed
-  shell: fc-cache -f -v
-  tags:
-    - install
-    - fonts
     - system

@@ -1,0 +1,52 @@
+- name: check if font is installed
+  shell: fc-list | grep Hasklug
+  register: font_installed
+  tags:
+    - install
+    - system
+
+- name: download font
+  when: font_installed is failed
+  become: true
+  get_url:
+    url: https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/Hasklig.tar.xz
+    dest: /tmp/Hasklug.tar.gz
+    force: "yes"
+  tags:
+    - install
+    - system
+
+- name: create font directory
+  when: font_installed is failed
+  shell: "mkdir -p {{ font_dir }}"
+  tags:
+    - install
+    - system
+
+- name: extract fonts
+  when: font_installed is failed
+  become: true
+  shell: "tar -xf /tmp/Hasklug.tar.gz -C {{ font_dir }} HasklugNerdFont-Regular.otf HasklugNerdFont-Medium.otf HasklugNerdFont-BoldItalic.otf HasklugNerdFont-Bold.otf HasklugNerdFont-Italic.otf HasklugNerdFontMono-Regular.otf HasklugNerdFontMono-Medium.otf HasklugNerdFontMono-BoldItalic.otf HasklugNerdFontMono-Bold.otf HasklugNerdFontMono-Italic.otf"
+  tags:
+    - install
+    - system
+
+- name: change ownership
+  when: font_installed is failed
+  become: true
+  file:
+    path: "{{ home }}/.local"
+    state: directory
+    recurse: yes
+    owner: "{{ username }}"
+    group: "{{ username }}"
+  tags:
+    - install
+    - system
+
+- name: update font cache
+  when: font_installed is failed
+  shell: fc-cache -f -v
+  tags:
+    - install
+    - system

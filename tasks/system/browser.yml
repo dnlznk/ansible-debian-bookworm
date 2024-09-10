@@ -1,0 +1,44 @@
+- name: check if browser is installed
+  shell: command -v brave-browser
+  register: browser_installed
+  tags:
+    - install
+    - system
+
+- name: set brave keyring
+  when: browser_installed is failed
+  become: true
+  shell: curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg
+  tags:
+    - install
+    - system
+
+- name: set brave source
+  when: browser_installed is failed
+  become: true
+  shell: echo "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg] https://brave-browser-apt-release.s3.brave.com/ stable main" | tee /etc/apt/sources.list.d/brave-browser-release.list
+  tags:
+    - install
+    - system
+
+- name: install browser
+  when: browser_installed is failed
+  become: true
+  ansible.builtin.apt:
+    pkg:
+      - brave-browser
+      - firefox-esr
+      - chromium
+    update_cache: true
+  tags:
+    - install
+    - system
+
+- name: set default browser
+  when: browser_installed is failed
+  become: true
+  shell: update-alternatives --install /usr/bin/x-www-browser x-www-browser /usr/bin/brave-browser 300
+  tags:
+    - install
+    - system
+
