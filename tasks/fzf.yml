@@ -10,7 +10,7 @@
   when: fzf_installed is failed
   git:
     repo: https://github.com/junegunn/fzf.git
-    dest: {{ fzf_dir }}
+    dest: "{{ fzf_dir }}"
     version: v0.55.0
   tags:
     - install
