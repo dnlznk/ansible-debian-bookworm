@@ -1,0 +1,35 @@
+- name: check if vscode is installed
+  shell: command -v vscode
+  register: vscode_installed
+  tags:
+    - install
+    - vscode
+
+- name: get vscode keyring
+  when: vscode_installed is failed
+  become: true
+  shell: wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg && install -D -m 644 packages.microsoft.gpg /etc/apt/keyrings/packages.microsoft.gpg && rm -f packages.microsoft.gpg
+  tags:
+    - install
+    - vscode
+
+- name: add vscode repo
+  when: vscode_installed is failed
+  become: true
+  shell: |
+    echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main" |
+    tee /etc/apt/sources.list.d/vscode.list > /dev/null
+  tags:
+    - install
+    - vscode
+
+- name: install vscode
+  when: vscode_installed is failed
+  become: true
+  ansible.builtin.apt:
+    pkg:
+      - code
+    update_cache: true
+  tags:
+    - install
+    - vscode

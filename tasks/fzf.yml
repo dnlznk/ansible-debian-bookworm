@@ -1,0 +1,24 @@
+- name: check fzf exists
+  shell: command -v fzf
+  register: fzf_installed
+  ignore_errors: true
+  tags:
+    - install
+    - fzf
+
+- name: clone fzf repo
+  when: fzf_installed is failed
+  git:
+    repo: https://github.com/junegunn/fzf.git
+    dest: {{ fzf_dir }}
+    version: v0.55.0
+  tags:
+    - install
+    - fzf
+
+- name: install fzf
+  when: fzf_installed is failed
+  shell: "{{ fzf_dir }}/install.sh --all"
+  tags:
+    - install
+    - fzf

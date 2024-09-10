@@ -1,0 +1,33 @@
+- name: check if spotify is install
+  shell: command -v spotify
+  register: spotify_installed
+  tags:
+    - install
+    - spotify
+
+- name: set spotify keyring
+  when: spotify_installed is failed
+  become: true
+  shell: curl -sS https://download.spotify.com/debian/pubkey_6224F9941A8AA6D1.gpg | gpg --dearmor --yes -o /etc/apt/trusted.gpg.d/spotify.gpg
+  tags:
+    - install
+    - spotify
+
+- name: add spotify source
+  when: spotify_installed is failed
+  become: true
+  shell: echo "deb http://repository.spotify.com stable non-free" | tee /etc/apt/sources.list.d/spotify.list
+  tags:
+    - install
+    - spotify
+
+- name: install spotify
+  when: spotify_installed is failed
+  become: true
+  ansible.builtin.apt:
+    pkg:
+      - spotify-client
+    update_cache: true
+  tags:
+    - install
+    - spotify

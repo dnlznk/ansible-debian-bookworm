@@ -14,6 +14,16 @@
       tags:
         - always
 
+    - name: install docker
+      include_tasks: tasks/docker.yml
+      tags:
+        - always
+
+    - name: install fzf
+      include_tasks: tasks/fzf.yml
+      tags:
+        - always
+
     - name: install neovim
       include_tasks: tasks/neovim.yml
       tags:
@@ -36,5 +46,10 @@
 
     - name: build st terminal
       include_tasks: tasks/st-terminal.yml
+      tags:
+        - always
+
+    - name: install spotify
+      include_tasks: tasks/spotify.yml
       tags:
         - always
