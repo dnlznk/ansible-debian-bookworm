@@ -231,6 +231,13 @@
     - install
     - system
 
+- name: create github directory
+  when: system_installed is failed
+  shell: "mkdir -p {{ github }}"
+  tags:
+    - install
+    - system
+
 - name: download font
   when: system_installed is failed
   become: true
