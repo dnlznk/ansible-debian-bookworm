@@ -1,0 +1,41 @@
+- name: check if blesh exists
+  stat:
+    path: "{{ blesh_dir }}"
+  register: blesh
+  tags:
+    - install
+    - blesh
+
+- name: clone blesh repo
+  when: not blesh.stat.exists
+  git:
+    repo: https://github.com/akinomyoga/ble.sh.git
+    dest: "{{ blesh_dir }}"
+    recursive: yes
+    version: v0.4.0-devel3
+  tags:
+    - install
+    - blesh
+
+- name: make blesh
+  when: not blesh.stat.exists
+  shell: make
+  chdir: "{{ blesh_dir }}"
+  tags:
+    - install
+    - blesh
+
+- name: install blesh
+  when: not blesh.stat.exists
+  shell: make install
+  chdir: "{{ blesh_dir }}"
+  tags:
+    - install
+    - blesh
+
+- name: install starship
+  when: not blesh.stat.exists
+  shell: cargo install starship --locked
+  tags:
+    - install
+    - blesh

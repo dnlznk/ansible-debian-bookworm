@@ -63,3 +63,8 @@
       include_tasks: tasks/spotify.yml
       tags:
         - always
+
+    - name: install blesh
+      include_tasks: tasks/blesh.yml
+      tags:
+        - always
