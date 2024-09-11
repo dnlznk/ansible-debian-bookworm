@@ -62,6 +62,7 @@
       - python3.11-venv
       - ffmpeg
       - vlc
+      - mpv
   tags:
     - install
     - system
