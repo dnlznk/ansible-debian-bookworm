@@ -59,6 +59,9 @@
       - fwupd
       - polybar
       - luarocks
+      - python3.11-venv
+      - ffmpeg
+      - vlc
   tags:
     - install
     - system
