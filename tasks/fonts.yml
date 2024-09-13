@@ -1,18 +1,7 @@
 - name: check if font is installed
-  shell: fc-list | grep Hasklug
+  shell: fc-list | grep CodeNewRoman
   register: font_installed
   ignore_errors: true
-  tags:
-    - install
-    - system
-
-- name: download fonts
-  when: font_installed is failed
-  become: true
-  get_url:
-    url: https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/Hasklig.tar.xz
-    dest: /tmp/Hasklug.tar.gz
-    force: "yes"
   tags:
     - install
     - system
@@ -24,10 +13,40 @@
     - install
     - system
 
-- name: extract fonts
+- name: download Hasklug
+  when: font_installed is failed
+  become: true
+  get_url:
+    url: https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/Hasklig.tar.xz
+    dest: /tmp/Hasklug.tar.gz
+    force: "yes"
+  tags:
+    - install
+    - system
+
+- name: extract Hasklug fonts
   when: font_installed is failed
   become: true
   shell: "tar -xf /tmp/Hasklug.tar.gz -C {{ font_dir }} HasklugNerdFont-Regular.otf HasklugNerdFont-Medium.otf HasklugNerdFont-BoldItalic.otf HasklugNerdFont-Bold.otf HasklugNerdFont-Italic.otf HasklugNerdFontMono-Regular.otf HasklugNerdFontMono-Medium.otf HasklugNerdFontMono-BoldItalic.otf HasklugNerdFontMono-Bold.otf HasklugNerdFontMono-Italic.otf"
+  tags:
+    - install
+    - system
+
+- name: download CodeNewRoman font
+  when: font_installed is failed
+  become: true
+  get_url:
+    url: https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/CodeNewRoman.tar.xz
+    dest: /tmp/CodeNewRoman.tar.gz
+    force: "yes"
+  tags:
+    - install
+    - system
+
+- name: extract CodeNewRoman fonts
+  when: font_installed is failed
+  become: true
+  shell: "tar -xf /tmp/CodeNewRoman.tar.gz -C {{ font_dir }}"
   tags:
     - install
     - system
