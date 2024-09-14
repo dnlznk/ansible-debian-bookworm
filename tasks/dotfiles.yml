@@ -73,8 +73,8 @@
   when: not dotfiles.stat.exists
   become: true
   copy:
-    src: "{{ dotfiles_dir }}/wallpaper/summer-beach-house.jpg"
-    dest: /usr/share/backgrounds/summer-beach-house.jpg
+    src: "{{ dotfiles_dir }}/wallpaper/summer-beach-house.png"
+    dest: /usr/share/backgrounds/summer-beach-house.png
   tags:
     - install
     - dotfiles
