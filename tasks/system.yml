@@ -63,6 +63,7 @@
       - ffmpeg
       - vlc
       - mpv
+      - imagemackig
   tags:
     - install
     - system

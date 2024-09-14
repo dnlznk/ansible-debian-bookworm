@@ -59,12 +59,22 @@
     - install
     - dotfiles
 
-- name: link wallpaper
+- name: copy wallpaper
   when: not dotfiles.stat.exists
   become: true
   copy:
-    src: "{{ dotfiles_dir }}/wallpaper/wallpaper.jpg"
+    src: "{{ dotfiles_dir }}/wallpaper/tropical-beach.jpg"
     dest: /usr/share/backgrounds/wallpaper.jpg
+  tags:
+    - install
+    - dotfiles
+
+- name: copy wallpaper
+  when: not dotfiles.stat.exists
+  become: true
+  copy:
+    src: "{{ dotfiles_dir }}/wallpaper/summer-beach-house.jpg"
+    dest: /usr/share/backgrounds/summer-beach-house.jpg
   tags:
     - install
     - dotfiles
