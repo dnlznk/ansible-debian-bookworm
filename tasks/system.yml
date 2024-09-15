@@ -64,6 +64,7 @@
       - vlc
       - mpv
       - imagemackig
+      - inotify-tools
   tags:
     - install
     - system
