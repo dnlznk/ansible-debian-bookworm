@@ -66,6 +66,7 @@
       - imagemackig
       - inotify-tools
       - slick-greeter
+      - feh
   tags:
     - install
     - system
