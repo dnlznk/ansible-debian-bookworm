@@ -65,6 +65,7 @@
       - mpv
       - imagemackig
       - inotify-tools
+      - slick-greeter
   tags:
     - install
     - system
