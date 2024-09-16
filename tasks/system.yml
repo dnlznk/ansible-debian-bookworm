@@ -67,6 +67,7 @@
       - inotify-tools
       - slick-greeter
       - feh
+      - bc
   tags:
     - install
     - system
