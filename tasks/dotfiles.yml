@@ -93,7 +93,7 @@
   when: not dotfiles.stat.exists
   become: true
   file:
-    src: "{{ dotfiles_dir }}/slick-greeter/lightdm.conf"
+    src: "{{ dotfiles_dir }}/lightdm/lightdm.conf"
     dest: /etc/lightdm/lightdm.conf
     state: link
   tags:
@@ -104,7 +104,7 @@
   when: not dotfiles.stat.exists
   become: true
   file:
-    src: "{{ dotfiles_dir }}/slick-greeter/slick-greeter.conf"
+    src: "{{ dotfiles_dir }}/lightdm/slick-greeter.conf"
     dest: /etc/lightdm/slick-greeter.conf
     state: link
   tags:
