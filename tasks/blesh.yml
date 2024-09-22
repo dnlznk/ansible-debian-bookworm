@@ -37,7 +37,7 @@
 
 - name: install starship
   when: not blesh.stat.exists
-  shell: source "{{ home }}/.cargo/env && cargo install starship --locked
+  shell: source "{{ home }}/.cargo/env" && cargo install starship --locked
   tags:
     - install
     - blesh
