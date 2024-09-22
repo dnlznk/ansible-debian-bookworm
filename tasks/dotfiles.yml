@@ -79,7 +79,28 @@
     - install
     - dotfiles
 
-- name: link slick-greeter conf
+- name: delete lightdm config
+  when: not dotfiles.stat.exists
+  become: true
+  file:
+    path: /etc/lightdm/lightdm.conf
+    state: absent
+  tags: 
+    - install
+    - dotfiles
+
+- name: link lightdm config
+  when: not dotfiles.stat.exists
+  become: true
+  file:
+    src: "{{ dotfiles_dir }}/slick-greeter/lightdm.conf"
+    dest: /etc/lightdm/lightdm.conf
+    state: link
+  tags:
+    - install
+    - dotfiles
+
+- name: link slick-greeter config
   when: not dotfiles.stat.exists
   become: true
   file:
