@@ -79,10 +79,13 @@
     - install
     - dotfiles
 
-- name: set lightdm backgrounds
+- name: link slick-greeter conf
   when: not dotfiles.stat.exists
   become: true
-  shell: sed -i 's@#background=@background=/usr/share/backgrounds/wallpaper.jpg@g' /etc/lightdm/lightdm-gtk-greeter.conf && sed -i 's@#user-background=@user-background=/usr/share/backgrounds/wallpaper.jpg@g' /etc/lightdm/lightdm-gtk-greeter.conf
+  file:
+    src: "{{ dotfiles_dir }}/slick-greeter/slick-greeter.conf"
+    dest: /etc/lightdm/slick-greeter.conf
+    state: link
   tags:
     - install
     - dotfiles
