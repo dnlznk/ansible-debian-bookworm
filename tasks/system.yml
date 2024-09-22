@@ -63,7 +63,7 @@
       - ffmpeg
       - vlc
       - mpv
-      - imagemackig
+      - imagemagick
       - inotify-tools
       - slick-greeter
       - feh
