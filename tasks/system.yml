@@ -71,6 +71,7 @@
       - slick-greeter
       - feh
       - bc
+      - genisoimage
   tags:
     - install
     - system
