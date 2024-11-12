@@ -72,6 +72,7 @@
       - feh
       - bc
       - genisoimage
+      - network-manager
   tags:
     - install
     - system
