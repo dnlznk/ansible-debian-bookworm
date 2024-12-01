@@ -73,6 +73,7 @@
       - bc
       - genisoimage
       - network-manager
+      - rofi
   tags:
     - install
     - system
