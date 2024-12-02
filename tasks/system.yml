@@ -29,6 +29,7 @@
       - lightdm
       - alsa-utils
       - pulseaudio
+      - pulseaudio-module-bluetooth
       - stow
       - tldr
       - libx11-dev
