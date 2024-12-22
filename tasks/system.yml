@@ -77,6 +77,8 @@
       - rofi
       - maim
       - xdotool
+      - libsecret-1-dev
+      - jq
   tags:
     - install
     - system
