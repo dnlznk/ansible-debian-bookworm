@@ -52,7 +52,6 @@
       - bridge-utils
       - virt-manager
       - qemu-guest-agent
-      - golang
       - pass
       - ufw
       - dkms
