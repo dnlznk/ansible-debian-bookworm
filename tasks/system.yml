@@ -79,6 +79,7 @@
       - xdotool
       - libsecret-1-dev
       - jq
+      - libcunit1-dev
   tags:
     - install
     - system
