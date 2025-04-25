@@ -79,6 +79,8 @@
       - libsecret-1-dev
       - jq
       - libcunit1-dev
+      - sqlite3
+      - libsqlite3-dev
   tags:
     - install
     - system
