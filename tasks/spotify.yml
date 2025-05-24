@@ -17,7 +17,7 @@
 - name: add spotify source
   when: spotify_installed is failed
   become: true
-  shell: echo "deb http://repository.spotify.com stable non-free" | tee /etc/apt/sources.list.d/spotify.list
+  shell: echo "deb https://repository.spotify.com stable non-free" | tee /etc/apt/sources.list.d/spotify.list
   tags:
     - install
     - spotify
