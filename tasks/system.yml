@@ -23,7 +23,7 @@
       - zsh
       - tmux
       - i3
-      - compton
+      - picom
       - xorg
       - xinit
       - lightdm
@@ -81,6 +81,7 @@
       - libcunit1-dev
       - sqlite3
       - libsqlite3-dev
+      - libimlib2-dev
   tags:
     - install
     - system
