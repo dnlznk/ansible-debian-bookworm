@@ -133,3 +133,11 @@
   tags:
     - install
     - system
+
+- name: hide default xsession
+  when: system_installed is failed
+  become: true
+  shell: echo "Hidden=true" >> /usr/share/xsessions/lightdm-xsession.desktop
+  tags:
+    - install
+    - system
