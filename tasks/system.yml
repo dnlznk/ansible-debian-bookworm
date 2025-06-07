@@ -82,6 +82,7 @@
       - sqlite3
       - libsqlite3-dev
       - libimlib2-dev
+      - libxcb-util-dev
   tags:
     - install
     - system
