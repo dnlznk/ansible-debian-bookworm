@@ -84,6 +84,8 @@
       - libimlib2-dev
       - libxcb-util-dev
       - acpid
+      - lm-sensors
+      - iw
   tags:
     - install
     - system
