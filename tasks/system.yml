@@ -86,6 +86,7 @@
       - acpid
       - lm-sensors
       - iw
+      - pinentry-gtk2
   tags:
     - install
     - system
