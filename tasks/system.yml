@@ -87,6 +87,7 @@
       - lm-sensors
       - iw
       - pinentry-gtk2
+      - xbacklight
   tags:
     - install
     - system
